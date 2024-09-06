@@ -1,23 +1,29 @@
 import 'dart:io';
 
+import 'classes_streamtalk/user.dart';
+
 void main() {
   print("Welcome to StreamTalk!");
   bool isProgramRunning = true;
-  String userNameAfterSignUp = "";
-  String userPasswordAfterSignUp = "";
 
+  List<User> users = [];
   while (isProgramRunning) {
     print("(S)ign up or (L)ogIn!");
     String userChoiceInput = stdin.readLineSync()!;
     switch (userChoiceInput) {
       case "s" || "S":
+        String userNameAfterSignUp = "";
+        String userPasswordAfterSignUp = "";
+        String userEmailAfterSignUp = "";
         isProgramRunning = true;
         stdout.write("Create Username: ");
         userNameAfterSignUp = stdin.readLineSync()!;
         stdout.write("Create Password: ");
         userPasswordAfterSignUp = stdin.readLineSync()!;
         stdout.write("E-mail: ");
-        stdin.readLineSync()!;
+        userEmailAfterSignUp = stdin.readLineSync()!;
+        users.add(User(userNameAfterSignUp, userPasswordAfterSignUp,
+            userEmailAfterSignUp));
         print("Succesfully created an Account! now LogIn and Enjoy!");
       case "l" || "L":
         isProgramRunning = true;
@@ -27,11 +33,18 @@ void main() {
         stdout.write("Enter Password: ");
 
         String userPasswordInput = stdin.readLineSync()!;
-        if (userNameInput == userNameAfterSignUp &&
-            userPasswordInput == userPasswordAfterSignUp) {
-          print("succesfully LoggedIn! Enjoy!");
+        bool logInCorrect = false;
+        for (User currentUser in users) {
+          if (userNameInput == currentUser.name &&
+              userPasswordInput == currentUser.password) {
+            logInCorrect = true;
+            break;
+          }
+        }
+        if (logInCorrect) {
+          print("Succesfully LoggedIn!");
         } else {
-          print("Username or Passwort wrong, try again!");
+          print("Username or Password incorrect. Try again!");
         }
     }
   }
