@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import '../fuctions/login_function.dart';
+import '../fuctions/singup_function.dart';
 import 'classes_streamtalk/user.dart';
 
 void main() {
@@ -12,40 +14,10 @@ void main() {
     String userChoiceInput = stdin.readLineSync()!;
     switch (userChoiceInput) {
       case "s" || "S":
-        String userNameAfterSignUp = "";
-        String userPasswordAfterSignUp = "";
-        String userEmailAfterSignUp = "";
-        isProgramRunning = true;
-        stdout.write("Create Username: ");
-        userNameAfterSignUp = stdin.readLineSync()!;
-        stdout.write("Create Password: ");
-        userPasswordAfterSignUp = stdin.readLineSync()!;
-        stdout.write("E-mail: ");
-        userEmailAfterSignUp = stdin.readLineSync()!;
-        users.add(User(userNameAfterSignUp, userPasswordAfterSignUp,
-            userEmailAfterSignUp));
-        print("Succesfully created an Account! now LogIn and Enjoy!");
+        User currentUser = signUp();
+        users.add(currentUser);
       case "l" || "L":
-        isProgramRunning = true;
-        stdout.write("Enter Username: ");
-
-        String userNameInput = stdin.readLineSync()!;
-        stdout.write("Enter Password: ");
-
-        String userPasswordInput = stdin.readLineSync()!;
-        bool logInCorrect = false;
-        for (User currentUser in users) {
-          if (userNameInput == currentUser.name &&
-              userPasswordInput == currentUser.password) {
-            logInCorrect = true;
-            break;
-          }
-        }
-        if (logInCorrect) {
-          print("Succesfully LoggedIn!");
-        } else {
-          print("Username or Password incorrect. Try again!");
-        }
+        loginUser(users);
     }
   }
 }
